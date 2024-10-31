@@ -10,6 +10,10 @@ import compress from "vite-plugin-compression";
 import AutoImport from "unplugin-auto-import/vite";
 import Components from "unplugin-vue-components/vite";
 
+import { ElementPlusResolver } from "unplugin-vue-components/resolvers";
+import Icons from "unplugin-icons/vite";
+import IconsResolver from "unplugin-icons/resolver";
+
 // https://vite.dev/config/
 export default defineConfig(({ mode }) => {
   const envDir = "env"; //环境变量文件的文件夹，相对于项目的路径，也可以用 nodejs 函数拼接绝对路径
@@ -37,10 +41,29 @@ export default defineConfig(({ mode }) => {
     }),
     AutoImport({
       imports: ["vue", "pinia", "vue-router"],
+      resolvers: [
+        // Element按需加载
+        ElementPlusResolver(),
+        // 自动导入图标组件
+        IconsResolver({
+          prefix: "Icon",
+        }),
+      ],
     }),
     Components({
       deep: true, // 搜索子目录
       dirs: ["src/components"], // 按需加载的文件夹
+      resolvers: [
+        // 自动注册图标组件
+        IconsResolver({
+          enabledCollections: ["ep"],
+        }),
+        // 自动导入 Element Plus 组件
+        ElementPlusResolver(),
+      ],
+    }),
+    Icons({
+      autoInstall: true,
     }),
     compress({
       threshold: 10 * 1024, // 10KB 以下不压缩
@@ -88,6 +111,15 @@ export default defineConfig(({ mode }) => {
     },
   };
 
+  //修复控制台弃用警告：Deprecation Warning: The legacy JS API is deprecated and will be removed in Dart Sass 2.0.0
+  const css = {
+    preprocessorOptions: {
+      scss: {
+        api: "modern-compiler", // or "modern"
+      },
+    },
+  };
+
   return {
     base,
     envDir,
@@ -95,5 +127,6 @@ export default defineConfig(({ mode }) => {
     plugins,
     server,
     resolve,
+    css,
   };
 });
