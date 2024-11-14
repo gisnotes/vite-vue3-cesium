@@ -11,7 +11,7 @@ let position = ref({});
 let popupContent = ref("");
 
 function viewerCreated() {
-  addEntities();
+  // addEntities();
 }
 
 function addEntities() {
