@@ -5,8 +5,10 @@ const router = createRouter({
   routes: [
     {
       path: "/",
-      name: "Openlayers一张图",
-      component: () => import("../views/OneMap.vue"),
+      // name: "Cesium一张图-测试弹窗",
+      // component: () => import("../views/OneMap.vue"),
+      name: "可视化笛卡尔坐标系",
+      component: () => import("../views/TestCartesian.vue"),
     },
   ],
 });
