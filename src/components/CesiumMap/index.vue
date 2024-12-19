@@ -20,7 +20,7 @@ const cesiumBaseUrl =
     : sourceCesiumBaseUrl;
 window.CESIUM_BASE_URL = cesiumBaseUrl;
 
-const emits = defineEmits(["viewerCreated", "leftClick"]);
+const emits = defineEmits(["leftClick"]);
 
 //--------------------生命周期-----------------------
 onMounted(() => {
@@ -57,7 +57,6 @@ function createViewer() {
     showRenderLoopErrors: false, //如果为true，则如果出现渲染循环错误，此小部件将自动向用户显示包含错误的HTML面板
   });
   csViewerStore.viewer = viewerRef;
-  emits("viewerCreated");
 }
 
 function initViewerParams() {

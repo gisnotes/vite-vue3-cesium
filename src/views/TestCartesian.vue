@@ -1,5 +1,5 @@
 <template>
-  <CesiumMap @viewerCreated="viewerCreated" />
+  <CesiumMap />
 </template>
 
 <script setup>
@@ -14,10 +14,10 @@ import useCSViewerStore from "@/stores/csViewer.js";
 
 const cvs = useCSViewerStore();
 
-function viewerCreated() {
+onMounted(() => {
   setViewerParams();
   addThreeDimensionalCartesianCoordinateSystem();
-}
+});
 
 function setViewerParams() {
   //开启地表透明：方便可视化笛卡尔坐标系

@@ -10,9 +10,9 @@ let yOffset = ref(12);
 let position = ref({});
 let popupContent = ref("");
 
-function viewerCreated() {
+onMounted(() => {
   addEntities();
-}
+});
 
 function addEntities() {
   const lngLat = [113.553696883309, 34.8244199026567];
@@ -48,7 +48,7 @@ function closePopup() {
 </script>
 
 <template>
-  <CesiumMap @viewerCreated="viewerCreated" @leftClick="handleLeftClick" />
+  <CesiumMap @leftClick="handleLeftClick" />
   <!-- 弹窗 -->
   <Popup :title :yOffset :position @close="closePopup">
     {{ popupContent }}
