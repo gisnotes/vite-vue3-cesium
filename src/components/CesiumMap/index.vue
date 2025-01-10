@@ -1,12 +1,15 @@
 <script setup>
-import { Ion, Viewer, ScreenSpaceEventType } from "cesium";
+import { Ion, Viewer, ScreenSpaceEventType, Camera, Rectangle } from "cesium";
 
 import useCSViewerStore from "@/stores/csViewer.js";
+import Tianditu from "./Tianditu.js";
 
 const csViewerStore = useCSViewerStore();
 
 let viewerDivRef = ref();
 let viewerRef = shallowRef();
+
+const tdt = new Tianditu();
 
 //获取CESIUM_BASE_URL
 const sysBaseUrl = import.meta.env.BASE_URL;
@@ -25,6 +28,7 @@ const emits = defineEmits(["leftClick"]);
 //--------------------生命周期-----------------------
 onMounted(() => {
   createViewer();
+  // addMapLyr();
   initViewerParams();
   initEvt();
 });
@@ -40,6 +44,16 @@ onBeforeUnmount(() => {
  * 初始化Viewer对象
  */
 function createViewer() {
+  /**
+   * 默认视图范围改为中国范围：
+   * https://github.com/wandergis/coordtransform/blob/master/index.js#L144
+   */
+  Camera.DEFAULT_VIEW_RECTANGLE = Rectangle.fromDegrees(
+    73.66,
+    3.86,
+    135.05,
+    53.55
+  );
   viewerRef.value = new Viewer(viewerDivRef.value, {
     geocoder: false, //位置查找工具(右上角的查询按钮)
     homeButton: false, //(首页位置)按钮，点击后会跳转到默认的全球视角
@@ -55,8 +69,19 @@ function createViewer() {
     skyBox: false, //skyBox、Sun or Moon都不会被添加
     shouldAnimate: true, //是否允许动画
     showRenderLoopErrors: false, //如果为true，则如果出现渲染循环错误，此小部件将自动向用户显示包含错误的HTML面板
+    // baseLayer: false,
   });
   csViewerStore.viewer = viewerRef;
+}
+
+/**
+ * 添加天地图影像图层和注记图层
+ */
+function addMapLyr() {
+  const imgService = tdt.createTiandituService("影像底图");
+  viewerRef.value.imageryLayers.addImageryProvider(imgService, 0);
+  const ciaService = tdt.createTiandituService("影像注记");
+  viewerRef.value.imageryLayers.addImageryProvider(ciaService, 1);
 }
 
 function initViewerParams() {
