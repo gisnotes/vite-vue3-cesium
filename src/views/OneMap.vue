@@ -1,6 +1,4 @@
 <script setup>
-import { Entity, Cartesian3, Color, defined } from "cesium";
-
 import useCSViewerStore from "@/stores/csViewer.js";
 
 const cvs = useCSViewerStore();
@@ -18,10 +16,10 @@ function addEntities() {
   const lngLat = [113.553696883309, 34.8244199026567];
   cvs.viewer.entities.add({
     name: "我是一个红色的长方体",
-    position: Cartesian3.fromDegrees(...lngLat),
+    position: Cesium.Cartesian3.fromDegrees(...lngLat),
     box: {
-      dimensions: new Cartesian3(100.0, 100.0, 1000.0),
-      material: Color.RED,
+      dimensions: new Cesium.Cartesian3(100.0, 100.0, 1000.0),
+      material: Cesium.Color.RED,
     },
     properties: {
       lngLat,
@@ -33,7 +31,7 @@ function addEntities() {
 function handleLeftClick(e) {
   const cartesianPos = cvs.viewer.scene.pickPosition(e.position);
   const obj = cvs.viewer.scene.pick(e.position);
-  if (defined(obj) && obj.id instanceof Entity) {
+  if (Cesium.defined(obj) && obj.id instanceof Cesium.Entity) {
     popupContent.value = `Entity所在坐标: ${obj.id.properties.lngLat.getValue()}`;
     title.value = obj.id.name;
     position.value = cartesianPos;

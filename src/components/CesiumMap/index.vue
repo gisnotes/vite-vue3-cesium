@@ -1,6 +1,4 @@
 <script setup>
-import { Ion, Viewer, ScreenSpaceEventType, Camera, Rectangle } from "cesium";
-
 import useCSViewerStore from "@/stores/csViewer.js";
 import Tianditu from "./Tianditu.js";
 
@@ -15,7 +13,7 @@ const tdt = new Tianditu();
 const sysBaseUrl = import.meta.env.BASE_URL;
 const mode = import.meta.env.MODE;
 const sourceCesiumBaseUrl = import.meta.env.VITE_CESIUM_BASE_URL;
-Ion.defaultAccessToken =
+Cesium.Ion.defaultAccessToken =
   "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJqdGkiOiIwNThmOGZlYy0yMWRhLTQ1Y2QtOWEzYy1kZDc1OTdkMDFiZmUiLCJpZCI6ODg0MjQsImlhdCI6MTY2OTUxNjY0N30.EnNjIANE_y4A1mB2PjYdWQJ5iqGqgztwUdV7blYGcNo";
 const cesiumBaseUrl =
   mode === "development"
@@ -35,7 +33,7 @@ onMounted(() => {
 
 onBeforeUnmount(() => {
   viewerRef.value?.screenSpaceEventHandler?.removeInputAction(
-    ScreenSpaceEventType.LEFT_CLICK
+    Cesium.ScreenSpaceEventType.LEFT_CLICK
   );
 });
 
@@ -48,13 +46,13 @@ function createViewer() {
    * 默认视图范围改为中国范围：
    * https://github.com/wandergis/coordtransform/blob/master/index.js#L144
    */
-  Camera.DEFAULT_VIEW_RECTANGLE = Rectangle.fromDegrees(
+  Cesium.Camera.DEFAULT_VIEW_RECTANGLE = Cesium.Rectangle.fromDegrees(
     73.66,
     3.86,
     135.05,
     53.55
   );
-  viewerRef.value = new Viewer(viewerDivRef.value, {
+  viewerRef.value = new Cesium.Viewer(viewerDivRef.value, {
     geocoder: false, //位置查找工具(右上角的查询按钮)
     homeButton: false, //(首页位置)按钮，点击后会跳转到默认的全球视角
     sceneModePicker: false, //视角模式切换
@@ -89,7 +87,7 @@ function initViewerParams() {
   viewerRef.value.scene.debugShowFramesPerSecond = true; //添加帧速显示
   //取消默认的双击事件
   viewerRef.value.cesiumWidget.screenSpaceEventHandler.removeInputAction(
-    ScreenSpaceEventType.LEFT_DOUBLE_CLICK
+    Cesium.ScreenSpaceEventType.LEFT_DOUBLE_CLICK
   );
   viewerRef.value.scene.globe.depthTestAgainstTerrain = true; //开启深度测试
   // 抗锯齿
@@ -105,7 +103,7 @@ function initViewerParams() {
 function initEvt() {
   viewerRef.value.screenSpaceEventHandler.setInputAction((e) => {
     emits("leftClick", e);
-  }, ScreenSpaceEventType.LEFT_CLICK);
+  }, Cesium.ScreenSpaceEventType.LEFT_CLICK);
 }
 </script>
 

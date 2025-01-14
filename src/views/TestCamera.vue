@@ -13,12 +13,6 @@
 
 <script setup>
 import useCSViewerStore from "@/stores/csViewer.js";
-import {
-  ScreenSpaceEventHandler,
-  Cartesian3,
-  ScreenSpaceEventType,
-  defined,
-} from "cesium";
 
 const cvs = useCSViewerStore();
 let viewer, scene, canvas, ellipsoid;
@@ -53,7 +47,7 @@ function initData() {
   scene.screenSpaceCameraController.enableTilt = false; //不允许Camera倾斜，Camera将锁定到当前航向
   scene.screenSpaceCameraController.enableLook = false; //如果为 true，则允许用户使用free-look。如果为 false，则只能通过平移或旋转来更改相机视图方向
 
-  handler = new ScreenSpaceEventHandler(canvas);
+  handler = new Cesium.ScreenSpaceEventHandler(canvas);
 }
 
 let onTick;
@@ -63,16 +57,16 @@ function initEvt() {
   handler.setInputAction((movement) => {
     // console.log('movement: ', movement);
     flags.looking = true;
-    mousePosition = startMousePosition = Cartesian3.clone(movement.position);
-  }, ScreenSpaceEventType.LEFT_DOWN);
+    mousePosition = startMousePosition = Cesium.Cartesian3.clone(movement.position);
+  }, Cesium.ScreenSpaceEventType.LEFT_DOWN);
   handler.setInputAction((movement) => {
     // console.log('movement: ', movement);
     mousePosition = movement.endPosition;
-  }, ScreenSpaceEventType.MOUSE_MOVE);
+  }, Cesium.ScreenSpaceEventType.MOUSE_MOVE);
   handler.setInputAction((position) => {
     // console.log('position: ', position);
     flags.looking = false;
-  }, ScreenSpaceEventType.LEFT_UP);
+  }, Cesium.ScreenSpaceEventType.LEFT_UP);
 
   document.addEventListener("keydown", keyDownEvt);
   document.addEventListener("keyup", keyUpEvt);
@@ -167,15 +161,15 @@ function clockOntickEvt(clock) {
 
 //-------------解绑所有事件监听器------------
 onBeforeUnmount(() => {
-  handler.removeInputAction(ScreenSpaceEventType.LEFT_DOWN);
-  handler.removeInputAction(ScreenSpaceEventType.MOUSE_MOVE);
-  handler.removeInputAction(ScreenSpaceEventType.LEFT_UP);
+  handler.removeInputAction(Cesium.ScreenSpaceEventType.LEFT_DOWN);
+  handler.removeInputAction(Cesium.ScreenSpaceEventType.MOUSE_MOVE);
+  handler.removeInputAction(Cesium.ScreenSpaceEventType.LEFT_UP);
 
   document.removeEventListener("keydown", keyDownEvt);
   document.removeEventListener("keyup", keyUpEvt);
   canvas.removeEventListener("click", canvasListenerEvt);
 
-  if (defined(onTick)) {
+  if (Cesium.defined(onTick)) {
     //上面注册监听器的返回值为一个函数(Event.RemoveCallback)，该函数将在调用时删除此事件监听器。
     //具体可参考：https://cesium.com/learn/cesiumjs/ref-doc/Event.html#addEventListener
     onTick(); //这里执行返回值函数则会删除此监听器

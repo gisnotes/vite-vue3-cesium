@@ -32,22 +32,6 @@
 
 <script setup>
 import useCSViewerStore from "@/stores/csViewer.js";
-import {
-  SceneMode,
-  Transforms,
-  Cartesian3,
-  Matrix4,
-  Math,
-  EasingFunction,
-  Rectangle,
-  Color,
-  JulianDate,
-  defined,
-  DebugModelMatrixPrimitive,
-  PinBuilder,
-  VerticalOrigin,
-  DebugCameraPrimitive,
-} from "cesium";
 
 const cvs = useCSViewerStore();
 
@@ -57,7 +41,7 @@ let chinaExtentEntity, cameraPrimitive;
 
 //资源位置参考代码：https://github.com/CesiumGS/cesium/blob/1.125/packages/engine/Source/Core/PinBuilder.js#L88
 //buildModuleUrl(`Assets/Textures/maki/${encodeURIComponent(id)}.png`)
-const pinBuilder = new PinBuilder(); //一个实用程序类，用于将自定义地图图钉生成为 canvas 元素
+const pinBuilder = new Cesium.PinBuilder(); //一个实用程序类，用于将自定义地图图钉生成为 canvas 元素
 
 onMounted(() => {
   viewer = cvs.viewer;
@@ -179,7 +163,7 @@ function handleSelectChange(value) {
 
 function flyInACity() {
   camera.flyTo({
-    destination: Cartesian3.fromDegrees(
+    destination: Cesium.Cartesian3.fromDegrees(
       -73.98580932617188,
       40.74843406689482,
       363.34038727246224
@@ -187,16 +171,16 @@ function flyInACity() {
     complete: () => {
       setTimeout(() => {
         camera.flyTo({
-          destination: Cartesian3.fromDegrees(
+          destination: Cesium.Cartesian3.fromDegrees(
             -73.98585975679403,
             40.75759944127251,
             186.50838555841779
           ),
           orientation: {
-            heading: Math.toRadians(200.0),
-            pitch: Math.toRadians(-50.0),
+            heading: Cesium.Math.toRadians(200.0),
+            pitch: Cesium.Math.toRadians(-50.0),
           },
-          easingFunction: EasingFunction.LINEAR_NONE,
+          easingFunction: Cesium.EasingFunction.LINEAR_NONE,
         });
       }, 1000);
     },
@@ -205,16 +189,16 @@ function flyInACity() {
 
 function flyToSanDiego() {
   camera.flyTo({
-    destination: Cartesian3.fromDegrees(-117.16, 32.71, 15000.0),
+    destination: Cesium.Cartesian3.fromDegrees(-117.16, 32.71, 15000.0),
   });
 }
 
 function flyToHeadingPitchRoll() {
   camera.flyTo({
-    destination: Cartesian3.fromDegrees(-122.22, 46.12, 5000.0),
+    destination: Cesium.Cartesian3.fromDegrees(-122.22, 46.12, 5000.0),
     orientation: {
-      heading: Math.toRadians(20.0),
-      pitch: Math.toRadians(-35.0),
+      heading: Cesium.Math.toRadians(20.0),
+      pitch: Cesium.Math.toRadians(-35.0),
       roll: 0.0,
     },
   });
@@ -225,18 +209,18 @@ function flyToMyLocation() {
     (pos) => {
       //绘制一个定位图标
       viewer.entities.add({
-        position: Cartesian3.fromDegrees(
+        position: Cesium.Cartesian3.fromDegrees(
           pos.coords.longitude,
           pos.coords.latitude,
           0.0
         ),
         billboard: {
           image: pinBuilder.fromMakiIconId("hospital", Cesium.Color.RED, 48),
-          verticalOrigin: VerticalOrigin.BOTTOM, // 图标对齐方式
+          verticalOrigin: Cesium.VerticalOrigin.BOTTOM, // 图标对齐方式
         },
       });
       camera.flyTo({
-        destination: Cartesian3.fromDegrees(
+        destination: Cesium.Cartesian3.fromDegrees(
           pos.coords.longitude,
           pos.coords.latitude,
           1000.0
@@ -257,7 +241,7 @@ function flyToRectangle() {
   const south = 38.0;
   const east = -87.0;
   const north = 40.0;
-  const rectangle = Rectangle.fromDegrees(west, south, east, north);
+  const rectangle = Cesium.Rectangle.fromDegrees(west, south, east, north);
 
   camera.flyTo({
     destination: rectangle,
@@ -278,7 +262,7 @@ function viewRectangle() {
   const east = -72.0;
   const north = 42.0;
 
-  const rectangle = Rectangle.fromDegrees(west, south, east, north);
+  const rectangle = Cesium.Rectangle.fromDegrees(west, south, east, north);
   camera.setView({
     destination: rectangle,
   });
@@ -293,49 +277,49 @@ function viewRectangle() {
 
 function setReferenceFrame() {
   //局部坐标系（ENU）原点的坐标
-  const center = Cartesian3.fromDegrees(-75.59777, 40.03883);
+  const center = Cesium.Cartesian3.fromDegrees(-75.59777, 40.03883);
   /**
    * 计算从ENU坐标系转换为全球通用坐标系的转换矩阵
    * ENU，全称为：East north up coordinate，即东北天坐标系，参考：
    * https://en.wikipedia.org/wiki/Local_tangent_plane_coordinates#Local_east,_north,_up_(ENU)_coordinates
    */
-  const transform = Transforms.eastNorthUpToFixedFrame(center);
+  const transform = Cesium.Transforms.eastNorthUpToFixedFrame(center);
 
-  camera.constrainedAxis = Cartesian3.UNIT_Z;
+  camera.constrainedAxis = Cesium.Cartesian3.UNIT_Z;
   //使用目标和变换矩阵设置摄像机位置和方向
   camera.lookAtTransform(
     transform,
-    new Cartesian3(-120000.0, -120000.0, 120000.0)
+    new Cesium.Cartesian3(-120000.0, -120000.0, 120000.0)
   );
 
   referenceFramePrimitive = scene.primitives.add(
-    new DebugModelMatrixPrimitive({
+    new Cesium.DebugModelMatrixPrimitive({
       modelMatrix: transform,
       length: 100000.0,
     })
   );
 
   //计算当前局部坐标系的原点转为世界坐标系坐标
-  const enuOrigin = Matrix4.multiplyByPoint(
+  const enuOrigin = Cesium.Matrix4.multiplyByPoint(
     transform,
-    new Cartesian3(0, 0, 0),
-    new Cartesian3()
+    new Cesium.Cartesian3(0, 0, 0),
+    new Cesium.Cartesian3()
   );
   viewer.entities.add({
     position: enuOrigin,
     billboard: {
       image: pinBuilder.fromMakiIconId("hospital", Cesium.Color.RED, 48),
-      verticalOrigin: VerticalOrigin.BOTTOM, // 图标对齐方式
+      verticalOrigin: Cesium.VerticalOrigin.BOTTOM, // 图标对齐方式
     },
   });
 }
 
 function setHeadingPitchRoll() {
   camera.setView({
-    destination: Cartesian3.fromDegrees(-75.5847, 40.0397, 1000.0),
+    destination: Cesium.Cartesian3.fromDegrees(-75.5847, 40.0397, 1000.0),
     orientation: {
-      heading: -Math.PI_OVER_TWO,
-      pitch: -Math.PI_OVER_FOUR,
+      heading: -Cesium.Math.PI_OVER_TWO,
+      pitch: -Cesium.Math.PI_OVER_FOUR,
       roll: 0.0,
     },
   });
@@ -350,17 +334,17 @@ function viewInICRF() {
   //添加在更新场景后和渲染场景之前执行的事件监听器。
   //事件的订阅者接收 Scene 实例作为第一个参数，将当前时间作为第二个参数。
   removePostUpdate = scene.postUpdate.addEventListener((scene, time) => {
-    console.log("time参数类型为JulianDate： ", time instanceof JulianDate);
-    if (scene.mode !== SceneMode.SCENE3D) {
+    console.log("time参数类型为JulianDate： ", time instanceof Cesium.JulianDate);
+    if (scene.mode !== Cesium.SceneMode.SCENE3D) {
       return;
     }
 
     //计算旋转矩阵，以在给定时间将点或矢量从国际天体参考系 （GCRF/ICRF） 惯性系轴变换为地球固定系轴 （ITRF）。如果尚未加载执行转换所需的数据，则此函数可能会返回 undefined。
-    const icrfToFixed = Transforms.computeIcrfToFixedMatrix(time);
+    const icrfToFixed = Cesium.Transforms.computeIcrfToFixedMatrix(time);
     if (Cesium.defined(icrfToFixed)) {
-      const offset = Cartesian3.clone(camera.position);
+      const offset = Cesium.Cartesian3.clone(camera.position);
       //从表示旋转的 Matrix3 和表示平移的 Cartesian3 计算 Matrix4 实例。这里只指定了第一个旋转参数，第二个平移参数默认值为：Cartesian3.ZERO
-      const transform = Matrix4.fromRotationTranslation(icrfToFixed);
+      const transform = Cesium.Matrix4.fromRotationTranslation(icrfToFixed);
       //使用目标和变换矩阵设置摄像机位置和方向。
       camera.lookAtTransform(transform, offset);
     }
@@ -454,7 +438,7 @@ function reset() {
   //参考源码：https://github.com/CesiumGS/cesium/blob/1.124/packages/engine/Source/Scene/Camera.js#L3453
   scene.tweens.removeAll(); //停止所有(正在进行的)补间动画
 
-  if (defined(removeStart)) {
+  if (Cesium.defined(removeStart)) {
     removeStart(); //这里执行返回值函数则会删除此监听器，下同
     removeEnd();
 
@@ -462,12 +446,12 @@ function reset() {
     removeEnd = undefined;
   }
 
-  if (defined(removeChanged)) {
+  if (Cesium.defined(removeChanged)) {
     removeChanged();
     removeChanged = undefined;
   }
 
-  if (defined(removePostUpdate)) {
+  if (Cesium.defined(removePostUpdate)) {
     removePostUpdate();
     removePostUpdate = undefined;
   }
@@ -478,7 +462,7 @@ function reset() {
    * > 1. 在默认状态下，摄像机的运动、旋转和缩放是基于世界坐标系的。
    * > 2. 调用 lookAtTransform(Matrix4.IDENTITY) 后，摄像机将以地球为中心，自由地观察或飞行。
    */
-  camera.lookAtTransform(Matrix4.IDENTITY);
+  camera.lookAtTransform(Cesium.Matrix4.IDENTITY);
 
   clock.multiplier = 1.0; //设置Clock.tick()方法为前进多少时间，单位是秒，这里设置为默认值1.0
 }
@@ -514,10 +498,10 @@ function drawChinaExtent() {
   }
   viewer.entities.add({
     rectangle: {
-      coordinates: Rectangle.fromDegrees(73.66, 3.86, 135.05, 53.55),
+      coordinates: Cesium.Rectangle.fromDegrees(73.66, 3.86, 135.05, 53.55),
       fill: false,
       outline: true,
-      outlineColor: Color.RED,
+      outlineColor: Cesium.Color.RED,
     },
   });
 }
@@ -530,7 +514,7 @@ function visualCameraFrustum() {
   //绘制是椎体
   camera.frustum.near = 200000.0;
   cameraPrimitive = scene.primitives.add(
-    new DebugCameraPrimitive({
+    new Cesium.DebugCameraPrimitive({
       camera,
       updateOnChange: false,
     })

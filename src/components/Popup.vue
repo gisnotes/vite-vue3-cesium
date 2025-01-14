@@ -1,6 +1,4 @@
 <script setup>
-import { SceneTransforms, defined } from "cesium";
-
 import useCSViewerStore from "@/stores/csViewer.js";
 
 const csViewerStore = useCSViewerStore();
@@ -51,7 +49,7 @@ function setPopupPositon() {
 
 function setPositionListener() {
   const canvasPosition = getCanvasPos(props.position);
-  if (defined(canvasPosition)) {
+  if (Cesium.defined(canvasPosition)) {
     if (!show.value) show.value = true;
     setPopupDiv(canvasPosition.x, canvasPosition.y - props.yOffset);
   }
@@ -59,7 +57,7 @@ function setPositionListener() {
 
 function getCanvasPos(cartesian3Pos) {
   return Object.keys(cartesian3Pos).length > 0
-    ? SceneTransforms.worldToWindowCoordinates(
+    ? Cesium.SceneTransforms.worldToWindowCoordinates(
         csViewerStore.viewer.scene,
         cartesian3Pos
       )
