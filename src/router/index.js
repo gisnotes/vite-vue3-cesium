@@ -5,16 +5,26 @@ const router = createRouter({
   routes: [
     {
       path: "/",
-      // name: "Cesium一张图-测试弹窗",
+      name: "home",
+      meta: {
+        title: "Cesium中的Camera",
+      },
       // component: () => import("../views/OneMap.vue"),
-      // name: "可视化笛卡尔坐标系",
-      // component: () => import("../views/TestCartesian.vue"),
-      // name: "Cesium中的Camera(1)",
-      // component: () => import("../views/TestCamera.vue"),
-      name: "Cesium中的Camera2",
-      component: () => import("../views/TestCamera2.vue"),
+      // component: () => import("../views/cartesian/TestCartesian.vue"),
+      // component: () => import("../views/camera/TestCamera.vue"),
+      component: () => import("../views/camera/TestCamera2.vue"),
     },
   ],
+});
+
+router.beforeEach((to, from, next) => {
+  if (to.meta.title) {
+    document.title = to.meta.title;
+  } else {
+    document.title = "Cesium一张图";
+  }
+
+  next();
 });
 
 export default router;

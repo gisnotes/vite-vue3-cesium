@@ -68,6 +68,7 @@ function createViewer() {
     shouldAnimate: true, //是否允许动画
     showRenderLoopErrors: false, //如果为true，则如果出现渲染循环错误，此小部件将自动向用户显示包含错误的HTML面板
     // baseLayer: false,
+    // terrain: Cesium.Terrain.fromWorldTerrain(),//加载地形
   });
   csViewerStore.viewer = viewerRef;
 }
