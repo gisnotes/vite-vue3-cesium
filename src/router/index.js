@@ -7,13 +7,14 @@ const router = createRouter({
       path: "/",
       name: "home",
       meta: {
-        title: "3DTiles要素拾取",
+        title: "I3S要素拾取",
       },
       // component: () => import("../views/OneMap.vue"),
       // component: () => import("../views/cartesian/TestCartesian.vue"),
       // component: () => import("../views/camera/TestCamera.vue"),
       // component: () => import("../views/camera/TestCamera2.vue"),
-      component: () => import("../views/pick/3DTilesFeaturePicking.vue"),
+      // component: () => import("../views/pick/3DTilesFeaturePicking.vue"),
+      component: () => import("../views/pick/I3SFeaturePicking.vue"),
     },
   ],
 });
