@@ -9,6 +9,7 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "axios": "^1.7.9",
     "cesium": "^1.122.0",
     "element-plus": "^2.8.6",
     "pinia": "^2.2.4",
