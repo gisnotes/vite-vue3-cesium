@@ -194,7 +194,7 @@ function pickGlbModel() {
     name: "牛奶卡车",
     position: Cesium.Cartesian3.fromDegrees(104.2, 35.13),
     model: {
-      uri: "./data/CesiumMilkTruck/CesiumMilkTruck.glb",
+      uri: "./SampleData/models/CesiumMilkTruck/CesiumMilkTruck.glb",
     },
   });
   viewer.zoomTo(modelEntity);
