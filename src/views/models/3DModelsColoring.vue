@@ -17,24 +17,13 @@
             :value="item.value" />
         </el-select>
       </el-form-item>
-      <el-form-item label="阴影">
+      <el-form-item label="启用阴影">
         <el-switch
           v-model="form.shadows"
           inline-prompt
           active-text="开"
           inactive-text="关"
           @change="handleShadowsChange" />
-        <el-popover
-          placement="right"
-          :width="100"
-          trigger="hover"
-          content="Viewer对象的shadows，是个布尔值，即确定阴影是否由光源投射。">
-          <template #reference>
-            <el-button size="small" circle style="margin-left: 10px">
-              <i-ep-InfoFilled />
-            </el-button>
-          </template>
-        </el-popover>
       </el-form-item>
       <el-divider content-position="left">模型颜色</el-divider>
       <el-form-item label="混合模式">
