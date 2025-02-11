@@ -125,13 +125,26 @@ let viewer, entity;
 const form = reactive({
   model: "Ground Vehicle",
   shadows: true,
+  /**
+   * colorBlendMode：默认值为HIGHLIGHT，颜色混合模式，定义目标颜色和基元(primitive)的源颜色之间的混合模式。
+   *  - HIGHLIGHT：其值为0，将源颜色乘以目标颜色
+   *  - REPLACE：其值为1，将源颜色替换为目标颜色
+   *  - MIX：其值为2，将源颜色和目标颜色混合在一起
+   */
   colorBlendMode: "Highlight",
   color: "Red",
   alpha: 1.0,
+  /**
+   * colorBlendAmount默认值为0.5
+   * 当上述colorBlendMode 为 MIX 时，用于确定颜色强度的值。
+   *  - 值为 0.0 时，将产生模型的渲染颜色；
+   *  - 而值为 1.0 时，将产生纯色；
+   *  - 介于两者之间的任何值都会导致两者混合。
+   */
   colorBlendAmount: 0.5,
   silhouetteColor: "Red",
   silhouetteAlpha: 1.0,
-  silhouetteSize: 2.0,
+  silhouetteSize: 2.0, //轮廓的大小，单位为像素
 });
 
 /**
@@ -260,20 +273,12 @@ function handleAlphaChange(val) {
   entity.model.color = getColor(form.color, val);
 }
 
-/**
- * model的colorBlendAmount默认值为0.5
- * @param val
- * 当 colorBlendMode 为 MIX 时，用于确定颜色强度的值。
- * - 值为 0.0 时，将产生模型的渲染颜色；
- * - 而值为 1.0 时，将产生纯色；
- * - 介于两者之间的任何值都会导致两者混合。
- */
 function handleColorBlendAmountChange(val) {
   entity.model.colorBlendAmount = parseFloat(val);
 }
 
 function handleSilhouetteColorChange(val) {
-  entity.model.silhouetteColor = getColor(newValue, form.silhouetteAlpha);
+  entity.model.silhouetteColor = getColor(val, form.silhouetteAlpha);
 }
 
 function handleSilhouetteAlphaChange(val) {
@@ -298,9 +303,6 @@ function getColor(colorName, alpha) {
 /**
  * 获取颜色混合模式
  * @param colorBlendMode 颜色混合模式，定义目标颜色和基元(primitive)的源颜色之间的混合模式。
- * HIGHLIGHT：其值为0，将源颜色乘以目标颜色
- * REPLACE：其值为1，将源颜色替换为目标颜色
- * MIX：其值为2，将源颜色和目标颜色混合在一起
  */
 function getColorBlendMode(colorBlendMode) {
   return Cesium.ColorBlendMode[colorBlendMode.toUpperCase()];
