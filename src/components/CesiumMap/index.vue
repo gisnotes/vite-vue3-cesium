@@ -21,7 +21,7 @@ const cesiumBaseUrl =
     : sourceCesiumBaseUrl;
 window.CESIUM_BASE_URL = cesiumBaseUrl;
 
-const emits = defineEmits(["leftClick"]);
+const emits = defineEmits(["leftClick", "viewerCreated"]);
 
 //--------------------生命周期-----------------------
 onMounted(() => {
@@ -71,6 +71,7 @@ function createViewer() {
     // terrain: Cesium.Terrain.fromWorldTerrain(),//加载地形
   });
   csViewerStore.viewer = viewerRef;
+  emits("viewerCreated", viewerRef.value);
 }
 
 /**

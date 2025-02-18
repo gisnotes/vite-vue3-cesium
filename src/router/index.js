@@ -7,7 +7,7 @@ const router = createRouter({
       path: "/",
       name: "home",
       meta: {
-        title: "给3D模型着色（颜色设置）",
+        title: "调整3D Tiles的高度",
       },
       // component: () => import("../views/OneMap.vue"),
       // component: () => import("../views/cartesian/TestCartesian.vue"),
@@ -17,7 +17,8 @@ const router = createRouter({
       // component: () => import("../views/pick/I3SFeaturePicking.vue"),
       // component: () => import("../views/pick/Picking.vue"),
       // component: () => import("../views/models/3DModels.vue"),
-      component: () => import("../views/models/3DModelsColoring.vue"),
+      // component: () => import("../views/models/3DModelsColoring.vue"),
+      component: () => import("../views/3dtiles/3DTilesAdjustHeight.vue"),
     },
   ],
 });
