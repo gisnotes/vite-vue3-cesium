@@ -7,8 +7,9 @@ const router = createRouter({
       path: "/",
       name: "home",
       meta: {
-        title: "调整3D Tiles的高度",
+        title: "使用裁剪平面裁剪3d模型",
       },
+      // #region 已完成
       // component: () => import("../views/OneMap.vue"),
       // component: () => import("../views/cartesian/TestCartesian.vue"),
       // component: () => import("../views/camera/TestCamera.vue"),
@@ -18,7 +19,9 @@ const router = createRouter({
       // component: () => import("../views/pick/Picking.vue"),
       // component: () => import("../views/models/3DModels.vue"),
       // component: () => import("../views/models/3DModelsColoring.vue"),
-      component: () => import("../views/3dtiles/3DTilesAdjustHeight.vue"),
+      // component: () => import("../views/3dtiles/3DTilesAdjustHeight.vue"),
+      // #endregion
+      component: () => import("../views/3dtiles/3DTilesClippingPlanes.vue"),
     },
   ],
 });
