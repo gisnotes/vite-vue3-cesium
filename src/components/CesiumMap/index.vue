@@ -132,5 +132,6 @@ function initEvt() {
   top: 10px;
   left: 10px;
   right: auto;
+  user-select: none;
 }
 </style>
