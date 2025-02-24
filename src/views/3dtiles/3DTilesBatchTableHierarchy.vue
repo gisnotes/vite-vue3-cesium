@@ -71,7 +71,7 @@
 let viewer, tileset, handler;
 const hiddenFeatures = ref([]);
 
-const style = ref("Color all doors");
+const style = ref("No style");
 
 //属性弹窗
 let title = ref("弹窗标题");
@@ -88,6 +88,7 @@ const doorknob = reactive({});
  * @type {Array} 要加载的模型列表
  */
 const styles = [
+  { value: "No style", label: "无样式" },
   { value: "Color all doors", label: "给所有门涂色" },
   {
     value: "Color all features derived from door",
@@ -99,21 +100,7 @@ const styles = [
     label: "按class名称来为要素指定颜色",
   },
   { value: "Style by height", label: "按高度指定样式" },
-  { value: "No style", label: "无样式" },
 ];
-
-/**
- * isExactClass：它是Cesium提供的一个内置函数，
- * 专门用来检查3D Tiles数据中某个要素的分类（class）是否精确匹配某个字符串。
- */
-const defaultStyle = {
-  color: {
-    conditions: [
-      ["isExactClass('door')", "color('orange')"], //如果类别是“door”，涂成橙色
-      ["true", "color('white')"], //如果不是“door”，就涂成白色
-    ],
-  },
-};
 
 //#endregion
 
@@ -127,8 +114,8 @@ function viewerCreated(v) {
 onBeforeUnmount(() => {
   //移除监听器
   if (handler) {
-    handler.removeInputAction(Cesium.ScreenSpaceEventType.MIDDLE_CLICK);
     handler.removeInputAction(Cesium.ScreenSpaceEventType.LEFT_CLICK);
+    handler.removeInputAction(Cesium.ScreenSpaceEventType.RIGHT_CLICK);
     handler = handler.destroy();
   }
 });
@@ -142,8 +129,8 @@ async function addTilesets() {
     );
 
     viewer.scene.primitives.add(tileset);
-    viewer.zoomTo(tileset, new Cesium.HeadingPitchRange(0.0, -0.3, 0.0));
-    tileset.style = new Cesium.Cesium3DTileStyle(defaultStyle);
+    viewer.zoomTo(tileset, new Cesium.HeadingPitchRange(0.0, -0.3, 100.0));
+    tileset.style = new Cesium.Cesium3DTileStyle({}); //默认无样式
   } catch (error) {
     ElMessage.error(`tileset数据加载出错: ${error}`);
   }
@@ -160,7 +147,7 @@ function initEvents() {
     }
     feature.show = false;
     hiddenFeatures.value.push(feature);
-  }, Cesium.ScreenSpaceEventType.MIDDLE_CLICK);
+  }, Cesium.ScreenSpaceEventType.RIGHT_CLICK);
 
   //用鼠标左键单击弹窗展示要素信息
   handler.setInputAction(function (movement) {
@@ -174,7 +161,7 @@ function initEvents() {
 
 /**
  * 处理拾取的要素属性
- * 
+ *
  * @param {Cesium.Cesium3DTileFeature} feature 拾取的要素
  * @param {Cesium.ScreenSpaceEventHandler.PositionedEvent} e 在屏幕上的单个位置发生的事件，它的属性position是一个Cartesian2对象
  */
@@ -238,8 +225,22 @@ function handleRecovery() {
 function handleChangeStyle(value) {
   let style;
   switch (value) {
+    case "No style":
+      style = {};
+      break;
     case "Color all doors":
-      style = defaultStyle;
+      /**
+       * isExactClass：它是Cesium提供的一个内置函数，
+       * 专门用来检查3D Tiles数据中某个要素的分类（class）是否精确匹配某个字符串。
+       */
+      style = {
+        color: {
+          conditions: [
+            ["isExactClass('door')", "color('orange')"], //如果类别是“door”，涂成橙色
+            ["true", "color('white')"], //如果不是“door”，就涂成白色
+          ],
+        },
+      };
       break;
     case "Color all features derived from door":
       style = {
@@ -290,9 +291,6 @@ function handleChangeStyle(value) {
           ],
         },
       };
-      break;
-    case "No style":
-      style = {};
       break;
     default:
       style = {};
