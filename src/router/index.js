@@ -7,7 +7,7 @@ const router = createRouter({
       path: "/",
       name: "home",
       meta: {
-        title: "使用裁剪平面裁剪3d模型",
+        title: "3D Tiles的batch table的层次结构",
       },
       // #region 已完成
       // component: () => import("../views/OneMap.vue"),
@@ -20,8 +20,9 @@ const router = createRouter({
       // component: () => import("../views/models/3DModels.vue"),
       // component: () => import("../views/models/3DModelsColoring.vue"),
       // component: () => import("../views/3dtiles/3DTilesAdjustHeight.vue"),
+      // component: () => import("../views/3dtiles/3DTilesClippingPlanes.vue"),
       // #endregion
-      component: () => import("../views/3dtiles/3DTilesClippingPlanes.vue"),
+      component: () => import("../views/3dtiles/3DTilesBatchTableHierarchy.vue"),
     },
   ],
 });
