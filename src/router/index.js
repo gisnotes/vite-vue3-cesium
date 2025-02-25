@@ -7,7 +7,7 @@ const router = createRouter({
       path: "/",
       name: "home",
       meta: {
-        title: "两个3D Tiles数据对比",
+        title: "为3D Tiles要素设置样式",
       },
       // #region 已完成
       // component: () => import("../views/OneMap.vue"),
@@ -22,8 +22,9 @@ const router = createRouter({
       // component: () => import("../views/3dtiles/3DTilesAdjustHeight.vue"),
       // component: () => import("../views/3dtiles/3DTilesClippingPlanes.vue"),
       // component: () => import("../views/3dtiles/3DTilesBatchTableHierarchy.vue"),
+      // component: () => import("../views/3dtiles/3DTilesCompare.vue"),
       // #endregion
-      component: () => import("../views/3dtiles/3DTilesCompare.vue"),
+      component: () => import("../views/3dtiles/3DTilesFeatureStyling.vue"),
     },
   ],
 });
