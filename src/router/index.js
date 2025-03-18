@@ -7,7 +7,7 @@ const router = createRouter({
       path: "/",
       name: "home",
       meta: {
-        title: "为3D Tiles要素设置样式",
+        title: "3D Tiles交互",
       },
       // #region 已完成
       // component: () => import("../views/OneMap.vue"),
@@ -23,8 +23,9 @@ const router = createRouter({
       // component: () => import("../views/3dtiles/3DTilesClippingPlanes.vue"),
       // component: () => import("../views/3dtiles/3DTilesBatchTableHierarchy.vue"),
       // component: () => import("../views/3dtiles/3DTilesCompare.vue"),
+      // component: () => import("../views/3dtiles/3DTilesFeatureStyling.vue"),
       // #endregion
-      component: () => import("../views/3dtiles/3DTilesFeatureStyling.vue"),
+      component: () => import("../views/3dtiles/3DTilesInteractivity.vue"),
     },
   ],
 });
