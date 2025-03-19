@@ -25,8 +25,9 @@ const router = createRouter({
       // component: () => import("../views/3dtiles/3DTilesCompare.vue"),
       // component: () => import("../views/3dtiles/3DTilesFeatureStyling.vue"),
       // component: () => import("../views/3dtiles/3DTilesInteractivity.vue"),
+      // component: () => import("../views/3dtiles/3DTilesPointCloudStyling.vue"),
       // #endregion
-      component: () => import("../views/3dtiles/3DTilesPointCloudStyling.vue"),
+      component: () => import("../views/3dtiles/3DTilesVerticalExaggeration.vue"),
     },
   ],
 });
