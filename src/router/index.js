@@ -7,7 +7,7 @@ const router = createRouter({
       path: "/",
       name: "home",
       meta: {
-        title: "3D Tiles交互",
+        title: "为点云数据设置样式",
       },
       // #region 已完成
       // component: () => import("../views/OneMap.vue"),
@@ -24,8 +24,9 @@ const router = createRouter({
       // component: () => import("../views/3dtiles/3DTilesBatchTableHierarchy.vue"),
       // component: () => import("../views/3dtiles/3DTilesCompare.vue"),
       // component: () => import("../views/3dtiles/3DTilesFeatureStyling.vue"),
+      // component: () => import("../views/3dtiles/3DTilesInteractivity.vue"),
       // #endregion
-      component: () => import("../views/3dtiles/3DTilesInteractivity.vue"),
+      component: () => import("../views/3dtiles/3DTilesPointCloudStyling.vue"),
     },
   ],
 });
