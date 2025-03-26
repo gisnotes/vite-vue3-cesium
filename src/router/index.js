@@ -7,7 +7,7 @@ const router = createRouter({
       path: "/",
       name: "home",
       meta: {
-        title: "3D Tiles Inspector",
+        title: "修改大气散射参数",
       },
       // #region 已完成
       // component: () => import("../views/OneMap.vue"),
@@ -28,8 +28,9 @@ const router = createRouter({
       // component: () => import("../views/3dtiles/3DTilesPointCloudStyling.vue"),
       // component: () => import("../views/3dtiles/3DTilesVerticalExaggeration.vue"),
       // component: () => import("../views/3dtiles/3DTilesInspector.vue"),
+      // component: () => import("../views/3dtiles/3DTilesFormats.vue"),
       // #endregion
-      component: () => import("../views/3dtiles/3DTilesFormats.vue"),
+      component: () => import("../views/environment/Atmosphere.vue"),
     },
   ],
 });
