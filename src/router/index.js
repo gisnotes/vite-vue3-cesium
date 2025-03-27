@@ -7,7 +7,7 @@ const router = createRouter({
       path: "/",
       name: "home",
       meta: {
-        title: "修改大气散射参数",
+        title: "全球高分辨率海底地形可视化",
       },
       // #region 已完成
       // component: () => import("../views/OneMap.vue"),
@@ -29,8 +29,9 @@ const router = createRouter({
       // component: () => import("../views/3dtiles/3DTilesVerticalExaggeration.vue"),
       // component: () => import("../views/3dtiles/3DTilesInspector.vue"),
       // component: () => import("../views/3dtiles/3DTilesFormats.vue"),
+      // component: () => import("../views/environment/Atmosphere.vue"),
       // #endregion
-      component: () => import("../views/environment/Atmosphere.vue"),
+      component: () => import("../views/environment/Bathymetry.vue"),
     },
   ],
 });
