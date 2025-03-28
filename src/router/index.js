@@ -7,7 +7,7 @@ const router = createRouter({
       path: "/",
       name: "home",
       meta: {
-        title: "全球高分辨率海底地形可视化",
+        title: "在场景中添加图片或标记形式的广告牌(Billboards)",
       },
       // #region 已完成
       // component: () => import("../views/OneMap.vue"),
@@ -30,8 +30,9 @@ const router = createRouter({
       // component: () => import("../views/3dtiles/3DTilesInspector.vue"),
       // component: () => import("../views/3dtiles/3DTilesFormats.vue"),
       // component: () => import("../views/environment/Atmosphere.vue"),
+      // component: () => import("../views/environment/Bathymetry.vue"),
       // #endregion
-      component: () => import("../views/environment/Bathymetry.vue"),
+      component: () => import("../views/environment/Billboards.vue"),
     },
   ],
 });
