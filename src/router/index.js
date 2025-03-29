@@ -7,7 +7,7 @@ const router = createRouter({
       path: "/",
       name: "home",
       meta: {
-        title: "仅加载bing地图注记图层",
+        title: "绘制Box",
       },
       // #region 已完成
       // component: () => import("../views/OneMap.vue"),
@@ -32,8 +32,11 @@ const router = createRouter({
       // component: () => import("../views/environment/Atmosphere.vue"),
       // component: () => import("../views/environment/Bathymetry.vue"),
       // component: () => import("../views/environment/Billboards.vue"),
+      // component: () => import("../views/mapserver/BingMap.vue"),
+      // component: () => import("../views/environment/BloomEffect.vue"),
+      // component: () => import("../views/mapserver/BlueMarble.vue"),
       // #endregion
-      component: () => import("../views/mapserver/BingMap.vue"),
+      component: () => import("../views/geometry/Box.vue"),
     },
   ],
 });

@@ -684,6 +684,5 @@ function handlePerFragmentAtmosphereChange(checked) {
 
 :deep(.el-input-number .el-input__inner){
   font-size: 13px;
-
 }
 </style>
