@@ -7,7 +7,7 @@ const router = createRouter({
       path: "/",
       name: "home",
       meta: {
-        title: "在场景中添加图片或标记形式的广告牌(Billboards)",
+        title: "仅加载bing地图注记图层",
       },
       // #region 已完成
       // component: () => import("../views/OneMap.vue"),
@@ -31,8 +31,9 @@ const router = createRouter({
       // component: () => import("../views/3dtiles/3DTilesFormats.vue"),
       // component: () => import("../views/environment/Atmosphere.vue"),
       // component: () => import("../views/environment/Bathymetry.vue"),
+      // component: () => import("../views/environment/Billboards.vue"),
       // #endregion
-      component: () => import("../views/environment/Billboards.vue"),
+      component: () => import("../views/mapserver/BingMap.vue"),
     },
   ],
 });
