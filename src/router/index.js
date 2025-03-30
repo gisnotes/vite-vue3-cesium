@@ -35,8 +35,9 @@ const router = createRouter({
       // component: () => import("../views/mapserver/BingMap.vue"),
       // component: () => import("../views/environment/BloomEffect.vue"),
       // component: () => import("../views/mapserver/BlueMarble.vue"),
+      // component: () => import("../views/geometry/Box.vue"),
       // #endregion
-      component: () => import("../views/geometry/Box.vue"),
+      component: () => import("../views/czml/CZMLCustomProperties.vue"),
     },
   ],
 });
