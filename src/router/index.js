@@ -7,7 +7,7 @@ const router = createRouter({
       path: "/",
       name: "home",
       meta: {
-        title: "绘制Box",
+        title: "聚类",
       },
       // #region 已完成
       // component: () => import("../views/OneMap.vue"),
@@ -36,8 +36,9 @@ const router = createRouter({
       // component: () => import("../views/environment/BloomEffect.vue"),
       // component: () => import("../views/mapserver/BlueMarble.vue"),
       // component: () => import("../views/geometry/Box.vue"),
+      // component: () => import("../views/czml/CZMLCustomProperties.vue"),
       // #endregion
-      component: () => import("../views/czml/CZMLCustomProperties.vue"),
+      component: () => import("../views/other/Clustering.vue"),
     },
   ],
 });

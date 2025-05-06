@@ -91,10 +91,10 @@ function initViewerParams() {
   viewerRef.value.cesiumWidget.screenSpaceEventHandler.removeInputAction(
     Cesium.ScreenSpaceEventType.LEFT_DOUBLE_CLICK
   );
-  viewerRef.value.scene.globe.depthTestAgainstTerrain = true; //开启深度测试
-  // 抗锯齿
-  viewerRef.value.scene.fxaa = true;
-  viewerRef.value.scene.postProcessStages.fxaa.enabled = false;
+  // viewerRef.value.scene.globe.depthTestAgainstTerrain = true; //开启深度测试
+  // // 抗锯齿
+  // viewerRef.value.scene.fxaa = true;
+  // viewerRef.value.scene.postProcessStages.fxaa.enabled = false;
   /**
    * 设置渲染分辨率的缩放因子，默认值为1，详细解释见官方api文档：https://cesium.com/learn/cesiumjs/ref-doc/Viewer.html?classFilter=viewer#resolutionScale
    * devicePixelRatio表示：显示设备的物理像素分辨率与CSS像素分辨率之比
